@@ -1,0 +1,78 @@
+<template>
+  <view class="food" bindtap="handleClick">
+    <view class="empty"></view>
+    <view class="food__left">
+      <image class="food__img" mode="widthFix" src="{{food.img}}"></image>
+    </view>
+    <view class="food__right">
+      <view class="food__title">{{food.title}}</view>
+      <view class="food__desc">{{food.desc}}</view>
+      <view class="food__desc">{{food.salc}}</view>
+      <view class="food__price">¥{{food.price}}</view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import mpx, { createComponent } from '@mpxjs/core'
+
+  createComponent({
+    data: {
+      food: {
+        img: 'http://p0.meituan.net/xianfu/35f6d24fa99aff856c1ffe7a2a57feac252897.png',
+        title: '板烧四件套',
+        desc: '板烧鸡腿堡1个＋麦辣鸡翅1对＋中薯条1份＋中杯可乐1杯',
+        salc: '月售73',
+        price: '28'
+      },
+      listData: ['手机', '电视', '电脑']
+    },
+    methods: {
+      handleClick () {
+        mpx.navigateTo({
+          url: '../pages/detail'
+        })
+      }
+    }
+  })
+</script>
+
+<style lang="stylus">
+  .food
+    display flex
+    padding 10px
+    box-sizing border-box
+    .empty
+      width 80px
+    .food__left
+      width 75px
+      height 75px
+      display flex
+      align-items center
+      justify-content center
+      .food__img
+        width 75px
+        height 75px
+    .food__right
+      flex 1
+      width 0
+      .food__title
+        font-size 16px
+        color #333
+        font-weight 900
+      .food__desc
+        white-space nowrap
+        text-overflow ellipsis
+        overflow hidden
+        font-size 11px
+        color #666
+      .food__price
+        font-size 18px
+        color #fb4e44
+</style>
+
+<script type="application/json">
+  {
+    "component": true
+  }
+</script>

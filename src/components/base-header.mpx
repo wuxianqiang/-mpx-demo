@@ -1,0 +1,81 @@
+<template>
+  <view class="header">
+    <view class="header__left">
+      <image class="header__img" mode="widthFix" src="https://p0.meituan.net/xianfu/f8ff929d2094796010b1be1550df0e9f28452.jpg">
+      </image>
+    </view>
+    <view class="header__right">
+      <view>28分钟 ｜ 1.1km</view>
+      <view class="header__desc">外送费无门槛仅需五元，注册成为麦当劳新会员即享0元辣翅一对(其它平台已注册除外)</view>
+      <view>
+        <swiper class="header__swiper" vertical="true" autoplay="true" circular="true">
+          <swiper-item wx:for="{{listData}}" wx:key="index">
+            <view class="header__item">
+              <image class="header__img" src="{{item.img}}" mode="widthFix">
+              </image>
+              <view>{{item.text}}</view>
+            </view>
+          </swiper-item>
+        </swiper>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import { createComponent } from '@mpxjs/core'
+
+  createComponent({
+    data: {
+      listData: [{
+        text: '满20减10',
+        img: 'https://p0.meituan.net/activityconfig/6087b33fd42d14fd94e899084aaef56d1720.png'
+      }, {
+        text: '折扣商品5折起',
+        img: 'https://p0.meituan.net/activityconfig/3da2d9c7a4ddf89e4e71cfdfff168c391088.png'
+      }]
+    }
+  })
+</script>
+
+<style lang="stylus">
+  .header
+    display flex
+    background #2E2F3B
+    padding 10px
+    color #fff
+    font-size 12px
+    box-sizing border-box
+    line-height 24px
+    .header__left
+      width 85px
+      height 64px
+      overflow hidden
+      .header__img
+        width 85px
+        height 64px
+    .header__right
+      flex 1
+      padding-left 10px
+      // 必须加 width 来处理文字超出无效的问题
+      width 0
+      .header__desc
+        white-space nowrap
+        text-overflow ellipsis
+        overflow hidden
+      .header__swiper
+        height 20px
+      .header__item
+        display flex
+        align-items center
+      .header__img
+        width 15px
+        height 15px
+        margin-right 6px
+</style>
+
+<script type="application/json">
+  {
+    "component": true
+  }
+</script>
