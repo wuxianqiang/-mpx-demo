@@ -1,6 +1,6 @@
 <template>
   <view class="detail">
-    <base-card></base-card>
+    <base-card index="{{index}}" type="{{type}}"></base-card>
     <view class="detail__bottom">
       <base-bottom></base-bottom>
     </view>
@@ -13,7 +13,14 @@
 
   createPage({
     data: {
-      listData: ['手机', '电视', '电脑']
+      listData: ['手机', '电视', '电脑'],
+      index: '',
+      type: ''
+    },
+    onLoad (options) {
+      console.log(options, 'options')
+      this.index = options.id || ''
+      this.type = options.type || ''
     }
   })
 </script>

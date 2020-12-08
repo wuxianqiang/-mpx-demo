@@ -37,6 +37,7 @@
 <script>
   import { createPage } from '@mpxjs/core'
   import dll from '../lib/dll'
+  import Store from '../store/index'
   console.log(dll)
   let top = 0
   let flag = false
@@ -50,19 +51,29 @@
       hasMenu: true,
       color: ''
     },
+    methods: {
+      ...Store.mapActions(['updateShopList'])
+    },
     onLoad () {
       wx.getSystemInfo({
         success: (res) => {
           this.height = res.windowHeight
         }
       })
-      const query = wx.createSelectorQuery()
-      query.select('#wrapper').boundingClientRect((res) => {
-        top = res.top
-      }).exec()
-      query.select('#food').boundingClientRect((res) => {
-        foodHeight = res.height
-      }).exec()
+      // 初始化店铺的数据
+      this.updateShopList()
+      this.$nextTick(() => {
+        const query = wx.createSelectorQuery()
+        query.select('#wrapper').boundingClientRect((res) => {
+          top = res.top
+        }).exec()
+        query.select('#food').boundingClientRect((res) => {
+          foodHeight = res.height
+        }).exec()
+      })
+    },
+    formatData () {
+      
     },
     handleScroll (e) {
       if (foodHeight <= this.height ) {

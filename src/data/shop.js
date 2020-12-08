@@ -1,5 +1,5 @@
 /* eslint-disable */
-const data = {
+export const data = {
   data: {
     outOfRange: 0,
     mtWmPoiId: "968073962850768",

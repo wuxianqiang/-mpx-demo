@@ -1,19 +1,24 @@
 <template>
   <view>
     <view
-      class="food"
-      bindtap="handleClick"
-      wx:for="{{listData}}"
-      wx:key="index">
-      <view class="empty"></view>
-      <view class="food__left">
-        <image class="food__img" mode="widthFix" src="{{food.img}}"></image>
-      </view>
-      <view class="food__right">
-        <view class="food__title">{{food.title}}</view>
-        <view class="food__desc">{{food.desc}}</view>
-        <view class="food__desc">{{food.salc}}</view>
-        <view class="food__price">¥{{food.price}}</view>
+      wx:for="{{foodList}}"
+      wx:for-index="type"
+      wx:key="type">
+      <view
+        class="food"
+        bindtap="handleClick(type, index)"
+        wx:for="{{item.spuList}}"
+        wx:key="index">
+        <view class="empty"></view>
+        <view class="food__left">
+          <image class="food__img" mode="widthFix" src="{{item.bigImageUrl}}"></image>
+        </view>
+        <view class="food__right">
+          <view class="food__title">{{item.spuName}}</view>
+          <view class="food__desc">{{item.spuDesc}}</view>
+          <view class="food__desc">月售26</view>
+          <view class="food__price">¥{{item.currentPrice}}</view>
+        </view>
       </view>
     </view>
   </view>
@@ -21,6 +26,7 @@
 
 <script>
   import mpx, { createComponent } from '@mpxjs/core'
+  import Store from '../store/index'
 
   createComponent({
     data: {
@@ -33,10 +39,13 @@
       },
       listData: ['手机', '电视', '电脑', '手机', '电视', '电脑', '手机', '电视', '电脑', '手机', '电视', '电脑']
     },
+    computed: {
+      ...Store.mapGetters(['foodList'])
+    },
     methods: {
-      handleClick () {
+      handleClick (type, index) {
         mpx.navigateTo({
-          url: '../pages/detail'
+          url: `../pages/detail?type=${type}&id=${index}`
         })
       }
     }

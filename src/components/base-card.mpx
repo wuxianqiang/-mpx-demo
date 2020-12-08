@@ -1,15 +1,15 @@
 <template>
-  <view class="card">
+  <view class="card" wx:if="{{index}}">
     <view class="card__wrapper">
-      <image class="card__img" mode="heightFix" src="https://p0.meituan.net/wmproduct/43638d2980cd2913b31980e93c938b3b975100.png"></image>
+      <image class="card__img" mode="widthFix" src="{{showFood.bigImageUrl}}"></image>
     </view>
-    <view class="card__title">秘制咖喱小龙虾饭</view>
-    <view class="card__salc">月售600</view>
-    <view class="card__price">22.9</view>
+    <view class="card__title">{{showFood.spuName}}</view>
+    <view class="card__salc">月售26</view>
+    <view class="card__price">{{showFood.currentPrice}}</view>
     <view class="card__desc">
       <view class="card__subtitle">商品简介</view>
       <view>
-        🌶新加坡的咖喱和印度的不一样！Q弹嫩口的小龙虾遇上鲜香的秘制咖喱，口中溢出了椰奶的醇香，美妙的化学反应就在你的舌尖发生。
+        {{showFood.spuDesc}}
       </view>
     </view>
   </view>
@@ -17,10 +17,32 @@
 
 <script>
   import { createComponent } from '@mpxjs/core'
+  import Store from '../store/index'
 
   createComponent({
     data: {
       listData: ['手机', '电视', '电脑']
+    },
+    properties: {
+      // 需要传入属性
+      index: {
+        type: String,
+        default: ''
+      },
+      type: {
+        type: String,
+        default: ''
+      }
+    },
+    computed: {
+      ...Store.mapGetters(['foodList']),
+      showFood () {
+        // 处理属性
+        if (!this.index) {
+          return ''
+        }
+        return this.foodList[this.type].spuList[this.index]
+      }
     }
   })
 </script>
@@ -35,6 +57,7 @@
       width 100%
       padding-top 100%
       overflow hidden
+      background #fff
       .card__img
         position absolute
         left 0
