@@ -1,6 +1,35 @@
 <template>
-  <view class="list">
-    <view>上地十街辉煌国际层底商西二旗上地</view>
+  <view class="business">
+    <view class="business__wrapper">
+      <view class="business__inner">
+        <view class="business__header">
+          <view>
+            <view class="business__title">小喵酸菜鱼</view>
+            <view class="business__desc">北京市海淀区马连洼北路8号A座地下一层01号</view>
+          </view>
+        </view>
+        <view class="business__list">
+          <image class="business__item" src="http://p0.meituan.net/wmcomment/bd455f0a5f33f460e31a0915518603ce120243.jpg"></image>
+          <image class="business__item" src="http://p0.meituan.net/wmcomment/04bb14f8480acf745d917b3e32c0def015572.jpg"></image>
+        </view>
+        <view class="business__header">
+          <view>
+            <view class="business__title">商家信息</view>
+            <view class="business__desc">商家品类：汉堡薯条/炸鸡炸串</view>
+            <view class="business__desc">营业时间：09:30:00-23:55:00</view>
+          </view>
+        </view>
+      </view>
+      <view class="business__inner">
+        <view class="business__header">
+          <view>
+            <view class="business__title">商家服务</view>
+            <view class="business__desc">该商户已购买食品安全责任，食品安全有保障</view>
+          </view>
+          <view></view>
+        </view>
+      </view>
+    </view>
   </view>
 </template>
 
@@ -15,8 +44,41 @@
 </script>
 
 <style lang="stylus">
-  .list
-    background-color red
+  .business
+    width 100%
+    height 100%
+    background #f5f5f5
+    .business__header
+      display flex
+      align-items center
+      justify-content space-between
+    .business__title
+      font-size 14px
+      font-weight 900
+      line-height 24px
+    .business__wrapper
+      padding 10px
+    .business__inner
+      border-radius 5px
+      background #fff
+      padding 10px
+      margin-bottom 10px
+    .business__desc
+      white-space nowrap
+      text-overflow ellipsis
+      overflow hidden
+      font-size 11px
+      color #666
+      line-height 20px
+    .business__list
+      display flex
+      flex-wrap wrap
+      margin-top 10px
+      .business__item
+        width 80px
+        height 80px
+        border-radius 5px
+        margin 0 5px 5px 0
 </style>
 
 <script type="application/json">

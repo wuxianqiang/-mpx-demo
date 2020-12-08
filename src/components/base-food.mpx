@@ -1,14 +1,20 @@
 <template>
-  <view class="food" bindtap="handleClick">
-    <view class="empty"></view>
-    <view class="food__left">
-      <image class="food__img" mode="widthFix" src="{{food.img}}"></image>
-    </view>
-    <view class="food__right">
-      <view class="food__title">{{food.title}}</view>
-      <view class="food__desc">{{food.desc}}</view>
-      <view class="food__desc">{{food.salc}}</view>
-      <view class="food__price">¥{{food.price}}</view>
+  <view>
+    <view
+      class="food"
+      bindtap="handleClick"
+      wx:for="{{listData}}"
+      wx:key="index">
+      <view class="empty"></view>
+      <view class="food__left">
+        <image class="food__img" mode="widthFix" src="{{food.img}}"></image>
+      </view>
+      <view class="food__right">
+        <view class="food__title">{{food.title}}</view>
+        <view class="food__desc">{{food.desc}}</view>
+        <view class="food__desc">{{food.salc}}</view>
+        <view class="food__price">¥{{food.price}}</view>
+      </view>
     </view>
   </view>
 </template>
@@ -25,7 +31,7 @@
         salc: '月售73',
         price: '28'
       },
-      listData: ['手机', '电视', '电脑']
+      listData: ['手机', '电视', '电脑', '手机', '电视', '电脑', '手机', '电视', '电脑', '手机', '电视', '电脑']
     },
     methods: {
       handleClick () {

@@ -1,0 +1,95 @@
+<template>
+  <view class="user">
+    <view class="user__left">
+      <image class="user__img" mode="widthFix" src="https://img.meituan.net/avatar/73adad799e50413fa042ce4a10ac7db321487.jpg"></image>
+    </view>
+    <view class="user__right">
+      <view>
+        <view class="user__title">
+          <view>吃的比猪小美还多</view>
+          <view class="user__time">2020-12-03</view>
+        </view>
+        <view class="user__time">24分钟送达</view>
+        <view class="user__desc">
+          很好吃#麻婆豆腐小龙虾饭＋海藻蛋花汤#，份量足，特别喜欢这家店的龙虾饭。
+        </view>
+      </view>
+      <view class="user__image">
+        <image class="user__food" src="http://p0.meituan.net/wmcomment/bd455f0a5f33f460e31a0915518603ce120243.jpg"></image>
+      </view>
+      <view class="user__type">
+        <view>招牌小龙虾饭+莲子雪耳羹</view>
+      </view>
+      <view class="user__type">
+        <view>穿戴工服,礼貌热情</view>
+      </view>
+      <view class="user__review">
+        商家回复(3天后):收到您的好评，海盗哥无比欣慰。我们的用心能得到您的认可，真是睡睡梦中都是开心的。祝您每天的日子如孩童般快乐！
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import { createComponent } from '@mpxjs/core'
+
+  createComponent({
+    data: {
+      listData: ['手机', '电视', '电脑']
+    }
+  })
+</script>
+
+<style lang="stylus">
+  .user
+    width 100%
+    padding 10px 0
+    display flex
+    .user__left
+      width 50px
+      .user__img
+        width 40px
+        height 40px
+        border-radius 50%
+    .user__right
+      flex 1
+      .user__title
+        display flex
+        align-items center
+        justify-content space-between
+        font-size 16px
+        color #2f2f2f
+      .user__time
+        font-size 12px
+        color #898989
+      .user__desc
+        color #2f2f2f
+        font-size 14px
+        padding-top 14px
+      .user__image
+        display flex
+        flex-wrap wrap
+        margin 10px 0
+        .user__food
+          width 80px
+          height 80px
+          padding 0 5px 5px 0
+      .user__type
+        font-size 12px
+        color #999
+        line-height 20px
+      .user__review
+        padding 5px 8px
+        background #f4f4f4
+        margin 10px 0
+        font-size 12px
+        color #666
+        line-height 15px
+        word-break break-all
+</style>
+
+<script type="application/json">
+  {
+    "component": true
+  }
+</script>

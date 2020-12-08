@@ -12,13 +12,15 @@
           <view wx:if="{{hasMenu}}" class="menu" style="height: {{height-50}}px">
             <scroll-view scroll-y="true" style="height: 100%">
               <base-menu></base-menu>
+              <view class="empty"></view>
             </scroll-view>
           </view>
         </view>
       </view>
     </view>
-    <view id="food" style="min-height: {{height-50}}px">
+    <view id="food" style="min-height: {{height-50}}px; background: {{color}};">
       <component is="{{current}}"></component>
+      <view class="empty"></view>
     </view>
     <!-- 必须在scroll-view里面定位，因为触摸滚动的时候会卡顿 -->
     <view class="bottom">
@@ -45,7 +47,8 @@
       height: 0,
       currentStyle: '',
       current: 'base-food',
-      hasMenu: true
+      hasMenu: true,
+      color: ''
     },
     onLoad () {
       wx.getSystemInfo({
@@ -87,8 +90,10 @@
       this.current = map[index]
       if (this.current === 'base-food') {
         this.hasMenu = true
+        this.color = ''
       } else {
         this.hasMenu = false
+        this.color = '#f5f5f5'
       }
     }
   })
@@ -144,6 +149,9 @@
     height 50px
     width 100%
     z-index 100
+  .empty
+    height 50px
+    width 100%
       
 </style>
 

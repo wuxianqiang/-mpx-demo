@@ -23,7 +23,13 @@
     "pages": [
       "./pages/index",
       "./pages/detail",
-    ]
+    ],
+    "window": {
+      "backgroundTextStyle": "light",
+      "navigationBarBackgroundColor": "#2e2f3b",
+      "navigationBarTitleText": "美食外卖",
+      "navigationBarTextStyle": "white"
+    },
   }
 </script>
 

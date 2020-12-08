@@ -1,6 +1,23 @@
 <template>
-  <view class="list">
-    <view wx:for="{{listData}}" wx:key="index">{{item}}</view>
+  <view class="evaluate">
+    <view class="evaluate__header">
+      <view class="evaluate__left">
+        <view class="evaluate__count">4.9</view>
+        <view class="evaluate__type">商家评分</view>
+      </view>
+      <view class="evaluate__center">
+        <view>口味</view>
+        <view>包装</view>
+      </view>
+      <view class="evaluate__right">
+        <view class="evaluate__count">4.9</view>
+        <view class="evaluate__type">配送评分</view>
+      </view>
+    </view>
+    <view class="evaluate__content">
+      <base-user></base-user>
+      <base-user></base-user>
+    </view>
   </view>
 </template>
 
@@ -15,12 +32,44 @@
 </script>
 
 <style lang="stylus">
-  .list
-    background-color red
+  .evaluate
+    width 100%
+    height 100%
+    .evaluate__content
+      background #fff
+      padding 10px 15px
+    .evaluate__header
+      background #fff
+      display flex
+      justify-content space-between
+      padding 15px
+      margin-bottom 10px
+      .evaluate__count
+        font-size 27px
+      .evaluate__left
+        color #FFB000
+        width 100px
+        text-align center
+      .evaluate__right
+        color #999
+        width 100px
+        text-align center
+      .evaluate__type
+        font-size 12px
+      .evaluate__center
+        flex 1
+        color #666
+        font-size 13px
+        display flex
+        flex-direction column
+        justify-content space-around
 </style>
 
 <script type="application/json">
   {
-    "component": true
+    "component": true,
+    "usingComponents": {
+      "base-user": "./base-user"
+    }
   }
 </script>
