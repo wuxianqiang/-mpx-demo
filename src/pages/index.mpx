@@ -3,7 +3,8 @@
   <scroll-view
     style="height: {{height}}px"
     scroll-y="true"
-    bindscroll="handleScroll">
+    bindscroll="handleScroll"
+    scroll-top="{{scrollTop}}">
     <base-header></base-header>
     <view class="wrapper" id="wrapper">
       <view class="inner" style="{{currentStyle}}">
@@ -11,11 +12,11 @@
           <base-tab bindselect="handleSelect"></base-tab>
           <view wx:if="{{hasMenu}}" class="menu" style="height: {{height-50}}px">
             <scroll-view scroll-y="true" style="height: 100%">
-              <base-menu activeIndex="{{activeIndex}}"></base-menu>
+              <base-menu activeIndex="{{activeIndex}}" bindselect="handleActive"></base-menu>
               <view class="empty"></view>
             </scroll-view>
           </view>
-          <view wx:if="{{hasMenu}}" class="title">{{getTitle}}</view>
+          <view wx:if="{{hasMenu}}" class="title" style="transform: translate3d(0, {{translateY}}px, 0)">{{getTitle}}</view>
         </view>
       </view>
     </view>
@@ -44,6 +45,7 @@
   let flag = false
   let foodHeight = 0
   let nodeList = []
+  let hasScroll = false
 
   createPage({
     data: {
@@ -53,7 +55,9 @@
       hasMenu: true,
       color: '',
       title: '折扣',
-      activeIndex: 0
+      activeIndex: 0,
+      scrollTop: 0,
+      translateY: 0
     },
     computed: {
       ...Store.mapGetters(['foodList']),
@@ -90,12 +94,27 @@
       for (let i = 0; i < nodeList.length; i++) {
         const element = nodeList[i]
         const nextEle = nodeList[i+1]
-        if (scrollTop > element.top && (!nextEle || nextEle.top > scrollTop)) {
+        // 50是标题栏的高度
+        if (scrollTop >= element.top - 50 && (!nextEle || nextEle.top - 50 > scrollTop)) {
           if (this.activeIndex !== i) {
             this.activeIndex = i
           }
           break
         }
+      }
+      // console.log(scrollTop, nodeList[this.activeIndex+1].top-80)
+      if (scrollTop > nodeList[this.activeIndex+1].top - 80 && scrollTop < nodeList[this.activeIndex+1].top + 30) {
+        this.translateY = nodeList[this.activeIndex+1].top - 80 - scrollTop
+      } else {
+        if (this.translateY) {
+          this.translateY = 0
+        }
+      }
+      if (hasScroll) {
+        console.log('设置为可以滚动', scrollTop)
+        // 解决scroll-view滚动无效的问题
+        this.scrollTop = scrollTop
+        hasScroll = false
       }
       if (foodHeight <= this.height ) {
         return
@@ -129,6 +148,15 @@
     },
     handleSize (e) {
       nodeList = e.detail.nodeList
+    },
+    handleActive (e) {
+      setTimeout(() => {
+        hasScroll = true
+      }, 50)
+      const index = e.detail.index
+      // this.activeIndex = index
+      console.log(nodeList[index] && nodeList[index].top - 50, 'okk')
+      this.scrollTop = nodeList[index] && nodeList[index].top - 50
     }
   })
 </script>
@@ -196,6 +224,7 @@
     color #333
     position absolute
     width 100%
+    // transform translate3d()
 </style>
 
 <script type="application/json">

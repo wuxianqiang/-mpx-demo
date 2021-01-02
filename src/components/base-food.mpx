@@ -3,14 +3,15 @@
     <view
       wx:for="{{foodList}}"
       wx:for-index="type"
-      wx:key="type">
+      wx:key="type"
+      wx:for-item="current">
       <view class="food__header">
-        {{item.categoryName}}
+        {{current.categoryName}}
       </view>
       <view
         class="food"
         bindtap="handleClick(type, index)"
-        wx:for="{{item.spuList}}"
+        wx:for="{{current.spuList}}"
         wx:key="index">
         <view class="empty"></view>
         <view class="food__left">
@@ -22,7 +23,7 @@
           <view class="food__desc">月售26</view>
           <view class="food__price">¥{{item.currentPrice}}</view>
           <view class="food__icon">
-            <base-add></base-add>
+            <base-add food="{{item}}" tag="{{current.tag}}"></base-add>
           </view>
         </view>
       </view>

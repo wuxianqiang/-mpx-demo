@@ -1,9 +1,9 @@
 <template>
   <view class="bottom">
     <view class="bottom__left">
-      <view class="bottom__dot">1</view>
+      <view class="bottom__dot" wx:if="{{count}}">{{count}}</view>
       <image
-        wx:if="{{hasFood}}"
+        wx:if="{{count}}"
         class="bottom__img"
         mode="widthFix"
         src="http://s3plus.meituan.net/v1/mss_e2821d7f0cfe4ac1bf9202ecf9590e67/cdn-prod/file:9096d347/03098cb323a0263fdbbb102c696433c5.png">
@@ -16,21 +16,43 @@
       </image>
     </view>
     <view class="bottom__center">
-      <view>39.9</view>
+      <view wx:if="{{count}}">{{money}}</view>
+      <view wx:else class="bottom__tip">预估另需配送费 ¥5</view>
     </view>
-    <view class="bottom__right">
+    <view class="bottom__right" wx:if="{{count}}">
       去结算
     </view>
+    <view class="bottom__begin" wx:else>¥20起送</view>
   </view>
 </template>
 
 <script>
   import { createComponent } from '@mpxjs/core'
+  import Store from '../store/index'
 
   createComponent({
     data: {
       listData: ['手机', '电视', '电脑'],
       hasFood: true
+    },
+    computed: {
+      ...Store.mapGetters(['foodList']),
+      count () {
+        const val = this.foodList.reduce((prev, cur) => {
+          return prev + cur.count
+        }, 0)
+        return val
+      },
+      money () {
+        let price = 0
+        this.foodList.forEach(item => {
+          item.spuList.forEach(current => {
+            price += current.count * (current.currentPrice * 10)
+          })
+        })
+        price = price / 10
+        return price
+      }
     }
   })
 </script>
@@ -75,6 +97,15 @@
       justify-content center
       background #FFD161
       color #000
+    .bottom__begin
+      width 108px
+      display flex
+      align-items center
+      justify-content center
+      color #999
+    .bottom__tip
+      font-size 14px
+      color #999
 </style>
 
 <script type="application/json">
