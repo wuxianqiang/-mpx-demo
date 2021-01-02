@@ -1,7 +1,7 @@
 <template>
   <view class="menu">
     <view
-      class="menu__item"
+      class="menu__item {{activeIndex===index?'active':''}}"
       wx:for="{{foodList}}"
       wx:key="index"
       bindtap="handleClick(index)">
@@ -15,6 +15,12 @@
   import Store from '../store/index'
 
   createComponent({
+    properties: {
+      activeIndex: {
+        type: Number,
+        value: 0
+      }
+    },
     data: {
       listData: [
         '单人超值套餐',
@@ -47,7 +53,11 @@
     .menu__item
       padding 10px
       min-height 50px
-    
+
+    .active
+      background #fff
+      font-weight 900
+      color #333
 </style>
 
 <script type="application/json">

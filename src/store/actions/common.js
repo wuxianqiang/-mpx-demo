@@ -7,9 +7,9 @@ export const updateShopList = function ({ commit }, shopList) {
   // 当setData的数据很多的时候，只保留需要使用的的字段，优化技巧
   const categoryList = data.data.categoryList || []
   const result = categoryList.map(item => {
-    const { spuList = [], categoryName = '', categoryType = '' } = item
+    const { spuList = [], categoryName = '', categoryType = '', tag = '' } = item
     const list = spuList.map(current => new Food(current))
-    const temp = { categoryName, categoryType, spuList: list }
+    const temp = { categoryName, categoryType, tag, spuList: list, count: 0 }
     return temp
   })
   console.log(result)

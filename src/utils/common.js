@@ -7,6 +7,7 @@ class Food {
     this.bigImageUrl = item.bigImageUrl
     this.spuId = item.spuId
     this.saleVolumeDecoded = item.saleVolumeDecoded
+    this.count = 0
   }
 }
 

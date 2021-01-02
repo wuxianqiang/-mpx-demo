@@ -1,22 +1,19 @@
-# mpx-app
+# 一个mpx外卖小程序
 
-> A mpx project
-
-## Dev
-
-```bash
-# install dep
-npm i
-
-# for dev
+```
 npm run watch
-
-# for online
-npm run build
 ```
 
-npm script规范 [build|watch]:[dev|prod]:[cross|web|none]
+你将学会：
 
-build默认prod，watch默认dev。另单独提供了build:dev和watch:prod，用于单次构建分析看未压缩代码分析问题和持续压缩代码便于大体积项目真机调试。
+1. 标题吸顶效果
+2. 动态组件，component is 特性，watch，computed 等 Mpx 增强的 API
+3. 组件之前通信
+4. 添加外部图标
+5. 路由跳转
+6. 创建 store 容器管理状态
+7. 图片懒加载
+8. 数字滚动特效
+9. 购物车小球飞入动画
+10. 
 
-建议自行调整cross的目标。npm-run-all是为了兼容windows下无法同时执行两个npm script，若不需要转web平台，可考虑去掉。

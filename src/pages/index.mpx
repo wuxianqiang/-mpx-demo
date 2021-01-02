@@ -11,15 +11,16 @@
           <base-tab bindselect="handleSelect"></base-tab>
           <view wx:if="{{hasMenu}}" class="menu" style="height: {{height-50}}px">
             <scroll-view scroll-y="true" style="height: 100%">
-              <base-menu></base-menu>
+              <base-menu activeIndex="{{activeIndex}}"></base-menu>
               <view class="empty"></view>
             </scroll-view>
           </view>
+          <view wx:if="{{hasMenu}}" class="title">{{getTitle}}</view>
         </view>
       </view>
     </view>
-    <view id="food" style="min-height: {{height-50}}px; background: {{color}};">
-      <component is="{{current}}"></component>
+    <view id="food" style="min-height: {{height-50}}px;">
+      <component is="{{current}}" bindsize="handleSize"></component>
       <view class="empty"></view>
     </view>
     <!-- 必须在scroll-view里面定位，因为触摸滚动的时候会卡顿 -->
@@ -42,6 +43,7 @@
   let top = 0
   let flag = false
   let foodHeight = 0
+  let nodeList = []
 
   createPage({
     data: {
@@ -49,10 +51,18 @@
       currentStyle: '',
       current: 'base-food',
       hasMenu: true,
-      color: ''
+      color: '',
+      title: '折扣',
+      activeIndex: 0
+    },
+    computed: {
+      ...Store.mapGetters(['foodList']),
+      getTitle () {
+        return this.foodList[this.activeIndex] && this.foodList[this.activeIndex].categoryName
+      }
     },
     methods: {
-      ...Store.mapActions(['updateShopList'])
+      ...Store.mapActions(['updateShopList']),
     },
     onLoad () {
       wx.getSystemInfo({
@@ -76,10 +86,20 @@
       
     },
     handleScroll (e) {
+      let scrollTop = e.detail.scrollTop
+      for (let i = 0; i < nodeList.length; i++) {
+        const element = nodeList[i]
+        const nextEle = nodeList[i+1]
+        if (scrollTop > element.top && (!nextEle || nextEle.top > scrollTop)) {
+          if (this.activeIndex !== i) {
+            this.activeIndex = i
+          }
+          break
+        }
+      }
       if (foodHeight <= this.height ) {
         return
       }
-      let scrollTop = e.detail.scrollTop
       if (scrollTop > top && !flag) {
         flag = true
         this.currentStyle = 'position: fixed;'
@@ -106,6 +126,9 @@
         this.hasMenu = false
         this.color = '#f5f5f5'
       }
+    },
+    handleSize (e) {
+      nodeList = e.detail.nodeList
     }
   })
 </script>
@@ -138,6 +161,7 @@
     position absolute
     left 0
     top 0
+    z-index 10
   .container
     width 100%
     height 100%
@@ -150,7 +174,7 @@
     height 0
     position absolute
     left 0
-    top 50px
+    top 51px
     z-index 99
     background #f5f5f5
   .bottom
@@ -163,7 +187,15 @@
   .empty
     height 50px
     width 100%
-      
+  .title
+    margin-left 80px
+    padding-left 10px
+    line-height 36px
+    background #fff
+    font-size 12px
+    color #333
+    position absolute
+    width 100%
 </style>
 
 <script type="application/json">
