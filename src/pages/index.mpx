@@ -2,7 +2,7 @@
   <view>
   <scroll-view
     style="height: {{height}}px"
-    scroll-y="true"
+    scroll-y="{{!showVisible}}"
     bindscroll="handleScroll"
     scroll-top="{{scrollTop}}">
     <base-header></base-header>
@@ -28,11 +28,10 @@
     <view class="bottom">
       <base-bottom></base-bottom>
     </view>
+    <base-dialog></base-dialog>
   </scroll-view>
   <!-- 弹窗逻辑都写在最外层 -->
-  <view>
-
-  </view>
+  
   </view>
 </template>
 
@@ -61,6 +60,7 @@
     },
     computed: {
       ...Store.mapGetters(['foodList']),
+      ...Store.mapState(['showVisible']),
       getTitle () {
         return this.foodList[this.activeIndex] && this.foodList[this.activeIndex].categoryName
       }
@@ -237,6 +237,7 @@
       "base-bottom": "../components/base-bottom.mpx",
       "base-business": "../components/base-business.mpx",
       "base-evaluate": "../components/base-evaluate.mpx",
+      "base-dialog": "../components/base-dialog.mpx"
     }
   }
 </script>

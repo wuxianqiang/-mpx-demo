@@ -1,0 +1,140 @@
+<template>
+  <view class="base-dialog">
+    <view class="base-dialog__bg {{showVisible?'active':''}}" catchtouchmove="stopEvent" bindtap="handleClick"></view>
+    <view class="base-dialog__container {{showVisible?'current':''}}">
+      <view class="base-dialog__inner">
+        <view class="base-dialog__header">
+          <view class="base-dialog__subtitle">购物车</view>
+          <view class="base-dialog__subtitle" bindtap="handleClear">清空购物车</view>
+        </view>
+        <view class="base-dialog__footer">
+          <view class="base-dialog__row" wx:for="{{selectList}}" wx:key="index">
+            <view class="base-dialog__left">
+              {{item.spuName}}
+            </view>
+            <view class="base-dialog__right">
+              <view class="base-dialog__price">
+                {{(item.count*(item.currentPrice*10))/10}}
+              </view>
+              <base-add food="{{item}}" tag="{{item.tag}}"></base-add>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import { createComponent } from '@mpxjs/core'
+  import Store from '../store/index'
+
+  createComponent({
+    data: {
+      listData: ['手机', '电视', '电脑']
+    },
+    computed: {
+      ...Store.mapState(['showVisible', 'selectList']),
+      ...Store.mapGetters(['foodList'])
+    },
+    methods: {
+      ...Store.mapMutations(['setState', 'clearCallback']),
+      stopEvent () {
+        return false
+      },
+      show () {
+        // this.showVisible = true
+      },
+      handleClick () {
+        this.setState({ showVisible: false })
+      },
+      handleClear () {
+        this.clearCallback()
+      }
+    }
+  })
+</script>
+
+<style lang="stylus">
+  .base-dialog
+    // position fixed
+    // left 0
+    // top 0
+    // width 100%
+    // height 100%
+    // z-index 350
+    .base-dialog__bg
+      position fixed
+      left 0
+      bottom 0
+      width 100%
+      height 100%
+      background #000
+      opacity 0
+      transition opacity 0.3s
+      display none
+      z-index 88
+    .active
+      display block
+      opacity 0.5
+    .base-dialog__container
+      position fixed
+      left 0
+      bottom 0
+      width 100%
+      background #fff
+      transform translate3d(0, 100%, 0)
+      transition transform 0.3s
+      z-index 99
+      padding-bottom 50px
+      padding-top 30px
+    .current
+      transform translate3d(0, 0, 0)
+    .base-dialog__row
+      display flex
+      padding 14px 0px
+      font-size 16px
+      color #333
+      border-bottom 1px solid #E4E4E4
+      margin 0 15px
+      align-items center
+      justify-content space-between
+    .base-dialog__left
+      flex 1
+    .base-dialog__right
+      display flex
+      align-items center
+    .base-dialog__price
+      color #FB4E44
+      margin 0 25px
+    .base-dialog__subtitle
+      font-size 12px
+      color #333
+    .base-dialog__header
+      background #F4F4F4
+      height 30px
+      display flex
+      align-items center
+      justify-content space-between
+      padding 0 15px
+      position absolute
+      left 0
+      top -30px
+      width 100%
+      box-sizing border-box
+    .base-dialog__inner
+      position relative
+      width 100%
+    .base-dialog__footer
+      max-height 250px
+      overflow scroll
+</style>
+
+<script type="application/json">
+  {
+    "component": true,
+    "usingComponents": {
+      "base-add": "./base-add.mpx"
+    }
+  }
+</script>

@@ -1,21 +1,26 @@
 <template>
-  <view class="detail">
+  <scroll-view scroll-y="{{!showVisible}}" class="detail">
     <base-card index="{{index}}" type="{{type}}"></base-card>
     <view class="detail__bottom">
       <base-bottom></base-bottom>
     </view>
     <view class="detail__empty"></view>
-  </view>
+    <base-dialog></base-dialog>
+  </scroll-view>
 </template>
 
 <script>
   import { createPage } from '@mpxjs/core'
+  import Store from '../store/index'
 
   createPage({
     data: {
       listData: ['手机', '电视', '电脑'],
       index: '',
       type: ''
+    },
+    computed: {
+      ...Store.mapState(['showVisible']),
     },
     onLoad (options) {
       console.log(options, 'options')
@@ -47,7 +52,8 @@
   {
     "usingComponents": {
       "base-bottom": "../components/base-bottom.mpx",
-      "base-card": "../components/base-card.mpx"
+      "base-card": "../components/base-card.mpx",
+      "base-dialog": "../components/base-dialog.mpx"
     }
   }
 </script>

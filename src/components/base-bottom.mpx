@@ -19,7 +19,7 @@
       <view wx:if="{{count}}">{{money}}</view>
       <view wx:else class="bottom__tip">预估另需配送费 ¥5</view>
     </view>
-    <view class="bottom__right" wx:if="{{count}}">
+    <view class="bottom__right" wx:if="{{count}}" bindtap="handleSave">
       去结算
     </view>
     <view class="bottom__begin" wx:else>¥20起送</view>
@@ -52,6 +52,12 @@
         })
         price = price / 10
         return price
+      }
+    },
+    methods: {
+      ...Store.mapMutations(['setState']),
+      handleSave () {
+        this.setState({ showVisible: true })
       }
     }
   })

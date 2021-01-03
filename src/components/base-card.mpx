@@ -5,7 +5,11 @@
     </view>
     <view class="card__title">{{showFood.spuName}}</view>
     <view class="card__salc">月售26</view>
-    <view class="card__price">{{showFood.currentPrice}}</view>
+    <view class="card__price">
+      {{showFood.currentPrice}}
+      <!-- todo -->
+      <!-- <base-add food="{{item}}" tag="{{item.tag}}"></base-add> -->
+    </view>
     <view class="card__desc">
       <view class="card__subtitle">商品简介</view>
       <view>
@@ -91,6 +95,9 @@
 
 <script type="application/json">
   {
-    "component": true
+    "component": true,
+    "usingComponents": {
+      "base-add": "./base-add.mpx"
+    }
   }
 </script>
