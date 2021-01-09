@@ -6,9 +6,9 @@
     <view class="card__title">{{showFood.spuName}}</view>
     <view class="card__salc">月售26</view>
     <view class="card__price">
-      {{showFood.currentPrice}}
+      <view>{{showFood.currentPrice}}</view>
       <!-- todo -->
-      <!-- <base-add food="{{item}}" tag="{{item.tag}}"></base-add> -->
+      <base-add food="{{showFood}}" tag="{{type}}"></base-add>
     </view>
     <view class="card__desc">
       <view class="card__subtitle">商品简介</view>
@@ -42,10 +42,12 @@
       ...Store.mapGetters(['foodList']),
       showFood () {
         // 处理属性
-        if (!this.index) {
-          return ''
+        if (!this.index || !this.type) {
+          return {}
         }
-        return this.foodList[this.type].spuList[this.index]
+        const target = this.foodList.find(item => item.tag === this.type)
+        const result = target.spuList.find(current => current.spuId === +this.index)
+        return result
       }
     }
   })
@@ -91,6 +93,10 @@
       font-size 18px
       padding 0 17px
       color #fb4e44
+      display flex
+      justify-content space-between
+      padding-bottom 12px
+      padding-top 8px
 </style>
 
 <script type="application/json">

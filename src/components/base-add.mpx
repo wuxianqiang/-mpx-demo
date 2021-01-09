@@ -1,13 +1,15 @@
 <template>
-  <view class="add" catchtap="stopEvent">
+  <view class="add" catchtap="stopEvent" wx:if="{{food}}">
     <view class="add__wrap" wx:if="{{food.count}}" bindtap="handleReduce">
-      <image class="add__img" mode="widthFix" src="../style/imgs/minus.png"></image>
+      <!-- <image class="add__img" mode="widthFix" src="../style/imgs/minus.png"></image> -->
+      <image class="add__img" mode="widthFix" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAMAAADypuvZAAAAM1BMVEX////Z296wsLD6+vvo6evi5Obe3+Lr7O709fb5+fr3+Pjb3eDw8fLu7/Hl5+nk5ui5ubmS1nTyAAABG0lEQVRIx52WWXLEIAxEeUGSGeNl7n/aME6lUmQWm+5f+5l2A5LSC+XFPCrUcFtyuqDbFHSK6XaCzE7TvpZ8LFnWnSafPyB5g2oldSpWYXvrcgKmkQdNDpbfWDDwVwEE8cH6HMRTIAX8Y7rZofxbByydyKBfKx7MORV9Bn4CPL82EfkKlOMv+QxzuqQZfr++YemijK3Dz9Sb8mb0sib8Z4tqGlDldrA2AtnhKygjUCGOX0tDesS2sI9BO0vzuI5BK5acMgYVPAV5DMpEy71P9P71pHu/J9REDzXmBdVDSJBkTwpCilzaXOkYSQdWuRrSJZSuu1JYpBKmFEupLCsNQGk1SlOT2qfSqJWRQBg+lDFHG6j00U0fEqVx9BvALAkNabHL3QAAAABJRU5ErkJggg=="></image>
     </view>
     <view class="add__count" wx:if="{{food.count}}">
       {{food.count}}
     </view>
     <view class="add__wrap" bindtap="handleAdd">
-      <image class="add__img" mode="widthFix" src="../style/imgs/add.png"></image>
+      <!-- <image class="add__img" mode="widthFix" src="../style/imgs/add.png"></image> -->
+      <image class="add__img" mode="widthFix" src="https://s3plus.meituan.net/v1/mss_e2821d7f0cfe4ac1bf9202ecf9590e67/cdn-prod/file:9096d347/40b1252b285172da0c8b7d88a2b46220.png"></image>
     </view>
   </view>
 </template>

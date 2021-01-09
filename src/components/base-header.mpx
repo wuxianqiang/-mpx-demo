@@ -7,8 +7,8 @@
     <view class="header__right">
       <view>28分钟 ｜ 1.1km</view>
       <view class="header__desc">外送费无门槛仅需五元，注册成为麦当劳新会员即享0元辣翅一对(其它平台已注册除外)</view>
-      <view>
-        <swiper class="header__swiper" vertical="true" autoplay="true" circular="true">
+      <view class="header-container">
+        <swiper class="header__swiper" vertical="{{true}}" autoplay="{{true}}" circular="{{true}}">
           <swiper-item wx:for="{{listData}}" wx:key="index">
             <view class="header__item">
               <image class="header__img" src="{{item.img}}" mode="widthFix">
@@ -65,6 +65,9 @@
         overflow hidden
       .header__swiper
         height 20px
+      .header-container
+        height 20px
+        overflow hidden
       .header__item
         display flex
         align-items center

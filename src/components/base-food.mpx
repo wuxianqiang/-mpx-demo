@@ -10,7 +10,7 @@
       </view>
       <view
         class="food"
-        bindtap="handleClick(type, index)"
+        bindtap="handleClick(current.tag, item.spuId)"
         wx:for="{{current.spuList}}"
         wx:key="index">
         <view class="empty"></view>
@@ -51,19 +51,26 @@
     },
     methods: {
       handleClick (type, index) {
+        // console.log(type, index, 'type, index')
         mpx.navigateTo({
           url: `../pages/detail?type=${type}&id=${index}`
         })
       }
     },
     watch: {
-      foodList (val) {
-        setTimeout(() => {
-          const query = this.createSelectorQuery()
-          query.selectAll('.food__header').boundingClientRect((res) => {
-            this.triggerEvent('size', { nodeList: res })
-          }).exec()
-        }, 20)
+      foodList: {
+        handler (val) {
+          if (!val.length) {
+            return
+          }
+          setTimeout(() => {
+            const query = this.createSelectorQuery()
+            query.selectAll('.food__header').boundingClientRect((res) => {
+              this.triggerEvent('size', { nodeList: res })
+            }).exec()
+          }, 20)
+        },
+        immediate: true
       }
     }
   })
@@ -81,6 +88,7 @@
     display flex
     padding 10px
     box-sizing border-box
+    background #fff
     .empty
       width 80px
     .food__left

@@ -1,7 +1,7 @@
 <template>
   <view class="tab">
     <view
-      class="tab__item"
+      class="tab__item {{current===index?'tab__active':''}}"
       wx:for="{{listData}}"
       wx:key="index"
       bindtap="handleClick(index)">
@@ -15,12 +15,14 @@
 
   createComponent({
     data: {
-      listData: ['点菜', '评价', '商家']
+      listData: ['点菜', '评价', '商家'],
+      current: 0
     },
     methods: {
       handleClick (index) {
         console.log(index)
         // 组件间通信与事件
+        this.current = index
         this.triggerEvent('select', { index })
       }
     }
@@ -42,6 +44,10 @@
       display flex
       align-items center
       justify-content center
+      color #666
+    .tab__active
+      color #000
+      font-weight 900
 </style>
 
 <script type="application/json">
