@@ -15,7 +15,7 @@
         wx:key="index">
         <view class="empty"></view>
         <view class="food__left">
-          <image class="food__img" mode="widthFix" src="{{item.bigImageUrl}}"></image>
+          <image class="food__img" src="{{item.bigImageUrl}}"></image>
         </view>
         <view class="food__right">
           <view class="food__title">{{item.spuName}}</view>
@@ -51,7 +51,6 @@
     },
     methods: {
       handleClick (type, index) {
-        // console.log(type, index, 'type, index')
         mpx.navigateTo({
           url: `../pages/detail?type=${type}&id=${index}`
         })

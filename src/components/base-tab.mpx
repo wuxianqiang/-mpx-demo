@@ -20,7 +20,6 @@
     },
     methods: {
       handleClick (index) {
-        console.log(index)
         // 组件间通信与事件
         this.current = index
         this.triggerEvent('select', { index })
@@ -38,7 +37,7 @@
     background #fff
     border-bottom 1px solid #e4e4e4
     position relative
-    z-index 10
+    z-index 999
     .tab__item
       flex 1
       display flex

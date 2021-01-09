@@ -1,27 +1,40 @@
 <template>
   <view>
-  <view class="page-wrapper" id="wrapper" wx:if="{{getSafeStyle}}">
-    <view class="page-inner" style="{{currentStyle}}">
-      <view class="page-container" catchtouchmove="stopEvent">
-        <base-tab bindselect="handleSelect"></base-tab>
-        <view wx:if="{{hasMenu}}" class="page-menu" style="height: {{height-50}}px">
-          <scroll-view scroll-y="{{true}}" style="height: 100%">
-            <base-menu activeIndex="{{activeIndex}}" bindselect="handleActive"></base-menu>
-            <view class="page-empty"></view>
-          </scroll-view>
+  <view class="page-scroll" id="scroll" wx:if="{{__mpx_mode__ === 'web'}}">
+    <base-header></base-header>
+    <view class="page-wrapper" id="wrapper">
+      <view class="page-inner" style="{{currentStyle}}">
+        <view class="page-container" catchtouchmove="stopEvent">
+          <base-tab bindselect="handleSelect"></base-tab>
+          <view wx:if="{{hasMenu}}" class="page-menu" style="height: {{height-50}}px">
+            <view scroll-y="{{true}}" style="height: 100%; overflow: scroll;">
+              <base-menu activeIndex="{{activeIndex}}" bindselect="handleActive"></base-menu>
+              <view class="page-empty"></view>
+            </view>
+          </view>
+          <view wx:if="{{hasMenu}}" class="page-title" style="transform: translate3d(0, {{translateY}}px, 0)">{{getTitle}}</view>
         </view>
-        <view wx:if="{{hasMenu}}" class="page-title" style="transform: translate3d(0, {{translateY}}px, 0)">{{getTitle}}</view>
       </view>
     </view>
+    <view id="food" style="min-height: {{height-50}}px;">
+      <component is="{{current}}" bindsize="handleSize"></component>
+      <view class="page-empty"></view>
+    </view>
+    <!-- 必须在scroll-view里面定位，因为触摸滚动的时候会卡顿 -->
+    <view class="page-bottom">
+      <base-bottom></base-bottom>
+    </view>
+    <base-dialog></base-dialog>
   </view>
   <scroll-view
     style="height: {{height}}px"
     scroll-y="{{!showVisible}}"
     bindscroll="handleScroll"
     scroll-top="{{scrollTop}}"
-    wx:ref="scrollview">
+    wx:ref="scrollview"
+    wx:else>
     <base-header></base-header>
-    <view class="page-wrapper" id="wrapper" wx:if="{{!getSafeStyle}}">
+    <view class="page-wrapper" id="wrapper">
       <view class="page-inner" style="{{currentStyle}}">
         <view class="page-container" catchtouchmove="stopEvent">
           <base-tab bindselect="handleSelect"></base-tab>
@@ -37,20 +50,14 @@
     </view>
     <view id="food" style="min-height: {{height-50}}px;">
       <component is="{{current}}" bindsize="handleSize"></component>
-      <view class="empty"></view>
+      <view class="page-empty"></view>
     </view>
     <!-- 必须在scroll-view里面定位，因为触摸滚动的时候会卡顿 -->
-    <view wx:if="{{__mpx_mode__ !== 'web'}}" class="page-bottom">
+    <view class="page-bottom">
       <base-bottom></base-bottom>
     </view>
     <base-dialog wx:if="{{__mpx_mode__ !== 'web'}}"></base-dialog>
   </scroll-view>
-  <!-- 弹窗逻辑都写在最外层 -->
-  <view wx:if="{{__mpx_mode__ === 'web'}}" class="page-bottom">
-    <base-bottom></base-bottom>
-  </view>
-  <base-dialog wx:if="{{__mpx_mode__ === 'web'}}"></base-dialog>
-  </view>
 </template>
 
 <script>
@@ -107,8 +114,16 @@
         }).exec()
       })
     },
-    formatData () {
-      
+    onReady () {
+      if (__mpx_mode__ === 'web') {
+        const el = document.getElementById('scroll')
+        el.addEventListener('scroll', (e) => {
+          this.handleScroll({ detail: { scrollTop: e.target.scrollTop } })
+        })
+        window.onhashchange = () => {
+          this.handleScroll({ detail: { scrollTop: 0 } })
+        }
+      }
     },
     handleScroll (e) {
       let scrollTop = e.detail.scrollTop
@@ -131,7 +146,6 @@
         }
       }
       if (hasScroll) {
-        console.log('设置为可以滚动', scrollTop)
         // 解决scroll-view滚动无效的问题
         this.scrollTop = scrollTop
         hasScroll = false
@@ -142,12 +156,12 @@
       if (scrollTop > top && !flag) {
         flag = true
         this.currentStyle = 'position: fixed;'
-        console.log('吸顶')
+        // console.log('吸顶')
       }
       if (scrollTop < top && flag) {
         flag = false
         this.currentStyle = ''
-        console.log('恢复')
+        // console.log('恢复')
       }
     },
     stopEvent () {
@@ -165,19 +179,29 @@
         this.hasMenu = false
         this.color = '#f5f5f5'
       }
+      if (__mpx_mode__ === 'web') {
+        const el = document.getElementById('scroll')
+        el.scrollTop = 0
+      } else {
+        console.log('设置top')
+        this.scrollTop = Math.random()
+      }
+      this.activeIndex = 0
       // todo:需要刷新scroll-view高度
     },
     handleSize (e) {
-      console.log(nodeList, '参数内容')
       nodeList = e.detail.nodeList
     },
     handleActive (e) {
+      const index = e.detail.index
+      if (__mpx_mode__ === 'web') {
+        const el = document.getElementById('scroll')
+        el.scrollTop = nodeList[index] && nodeList[index].top - 50
+        return
+      }
       setTimeout(() => {
         hasScroll = true
       }, 50)
-      const index = e.detail.index
-      // this.activeIndex = index
-      console.log(nodeList[index] && nodeList[index].top - 50, 'okk')
       this.scrollTop = nodeList[index] && nodeList[index].top - 50
     }
   })
@@ -246,7 +270,11 @@
     color #333
     position absolute
     width 100%
-    // transform translate3d()
+  .page-scroll
+    width 100%
+    height 100%
+    overflow-y scroll
+    overflow-x hidden
 </style>
 
 <script type="application/json">

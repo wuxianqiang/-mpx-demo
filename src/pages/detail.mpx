@@ -1,12 +1,22 @@
 <template>
-  <scroll-view scroll-y="{{!showVisible}}" class="detail">
-    <base-card index="{{index}}" type="{{type}}"></base-card>
-    <view class="detail__bottom">
-      <base-bottom></base-bottom>
+  <view>
+    <view wx:if="{{__mpx_mode__ === 'web'}}" class="detail" style="overflow: scroll;">
+      <base-card index="{{index}}" type="{{type}}"></base-card>
+      <view class="detail__bottom">
+        <base-bottom></base-bottom>
+      </view>
+      <view class="detail__empty"></view>
+      <base-dialog></base-dialog>
     </view>
-    <view class="detail__empty"></view>
-    <base-dialog></base-dialog>
-  </scroll-view>
+    <scroll-view wx:else scroll-y="{{!showVisible}}" class="detail">
+      <base-card index="{{index}}" type="{{type}}"></base-card>
+      <view class="detail__bottom">
+        <base-bottom></base-bottom>
+      </view>
+      <view class="detail__empty"></view>
+      <base-dialog></base-dialog>
+    </scroll-view>
+  </view>
 </template>
 
 <script>
@@ -23,11 +33,14 @@
       ...Store.mapState(['showVisible']),
     },
     onLoad (options) {
-      console.log(options, 'options')
-      setTimeout(() => {
+      if (__mpx_mode__ === 'web') {
+        const params = window.location.hash.match(/([^?&]+)=([^?&]+)/g)
+        this.index = params[1].split('=')[1]
+        this.type = params[0].split('=')[1]
+      } else {
         this.index = options.id || ''
         this.type = options.type || ''
-      }, 20)
+      }
     }
   })
 </script>
