@@ -122,6 +122,7 @@
         })
         window.onhashchange = () => {
           this.handleScroll({ detail: { scrollTop: 0 } })
+          this.activeIndex = 0
         }
       }
     },
