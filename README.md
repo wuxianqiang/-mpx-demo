@@ -13,3 +13,4 @@ npm run watch
 5. 创建 store 容器管理状态
 
 
+预览 [地址](https://wuxianqiang.github.io/mpx-app/#/pages/index)
